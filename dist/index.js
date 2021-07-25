@@ -39,12 +39,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var chalk = require("chalk");
 var inquirer = require("inquirer");
 var oauth_1 = require("./oauth");
-function default_1(instance, clientId, refreshToken) {
+function default_1(instance, clientId, clientSecret, refreshToken) {
     return __awaiter(this, void 0, void 0, function () {
-        var questionList, answers, oauthInstance, accessToken;
+        var oauthInstance_1, accessToken_1, questionList, answers, oauthInstance, accessToken;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    if (!(instance && clientId && clientSecret && refreshToken)) return [3 /*break*/, 2];
+                    instance = instance;
+                    clientId = clientId;
+                    clientSecret = clientSecret;
+                    refreshToken = refreshToken;
+                    oauthInstance_1 = oauth_1.default(instance);
+                    return [4 /*yield*/, oauthInstance_1.getAccessToken(clientId, clientSecret, refreshToken)];
+                case 1:
+                    accessToken_1 = _a.sent();
+                    return [2 /*return*/, {
+                            "accessToken": accessToken_1,
+                            "refreshToken": refreshToken,
+                            "clientSecret": clientSecret
+                        }];
+                case 2:
                     console.log(chalk.green.underline.bold("ServiceNow OAuth 2.0 Authentication"));
                     console.log(chalk.blueBright("To get a Client ID & Client Secret you have to create an OAuth Application Registry record in ServiceNow.\n  You just have to provide a name, everything else can be blank."));
                     console.log(chalk.yellow("====================================================="));
@@ -69,22 +84,26 @@ function default_1(instance, clientId, refreshToken) {
                         name: "clientSecret", type: "password", message: "Client Secret:", mask: "*"
                     });
                     return [4 /*yield*/, inquirer.prompt(questionList)];
-                case 1:
+                case 3:
                     answers = _a.sent();
                     if (!instance)
                         instance = answers.instanceName;
                     if (!clientId)
                         clientId = answers.clientId;
                     oauthInstance = oauth_1.default(instance);
-                    if (!!refreshToken) return [3 /*break*/, 3];
+                    if (!!refreshToken) return [3 /*break*/, 5];
                     return [4 /*yield*/, oauthInstance.getRefreshToken(answers.user, answers.userPassword, clientId, answers.clientSecret)];
-                case 2:
-                    refreshToken = _a.sent();
-                    _a.label = 3;
-                case 3: return [4 /*yield*/, oauthInstance.getAccessToken(clientId, answers.clientSecret, refreshToken)];
                 case 4:
+                    refreshToken = _a.sent();
+                    _a.label = 5;
+                case 5: return [4 /*yield*/, oauthInstance.getAccessToken(clientId, answers.clientSecret, refreshToken)];
+                case 6:
                     accessToken = _a.sent();
-                    return [2 /*return*/, { "accessToken": accessToken, "refreshToken": refreshToken }];
+                    return [2 /*return*/, {
+                            "accessToken": accessToken,
+                            "refreshToken": refreshToken,
+                            "clientSecret": answers.clientSecret
+                        }];
             }
         });
     });

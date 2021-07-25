@@ -4,11 +4,31 @@ import { QuestionCollection } from "inquirer";
 import oauth from "./oauth";
 
 interface cliReturnType {
-  accessToken: string, refreshToken: string
+  accessToken: string, refreshToken: string, clientSecret: string
 }
 
-export default async function
-  (instance?: string, clientId?: string, refreshToken?: string): Promise<cliReturnType> {
+export default async function (
+  instance?: string,
+  clientId?: string,
+  clientSecret?: string,
+  refreshToken?: string): Promise<cliReturnType> {
+
+  if (instance && clientId && clientSecret && refreshToken) {
+    instance = instance as string;
+    clientId = clientId as string;
+    clientSecret = clientSecret as string;
+    refreshToken = refreshToken as string;
+
+    let oauthInstance = oauth(instance);
+    let accessToken = await oauthInstance.getAccessToken
+      (clientId, clientSecret, refreshToken);
+
+    return {
+      "accessToken": accessToken,
+      "refreshToken": refreshToken,
+      "clientSecret": clientSecret
+    };
+  }
 
   console.log(chalk.green.underline.bold("ServiceNow OAuth 2.0 Authentication"));
   console.log(chalk.blueBright(`To get a Client ID & Client Secret you have to create an OAuth Application Registry record in ServiceNow.
@@ -48,5 +68,9 @@ export default async function
   let accessToken = await oauthInstance.getAccessToken
     (clientId, answers.clientSecret, refreshToken);
 
-  return { "accessToken": accessToken, "refreshToken": refreshToken };
+  return {
+    "accessToken": accessToken,
+    "refreshToken": refreshToken,
+    "clientSecret": answers.clientSecret
+  };
 };
