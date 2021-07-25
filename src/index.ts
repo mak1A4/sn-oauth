@@ -7,7 +7,8 @@ interface cliReturnType {
   accessToken: string, refreshToken: string
 }
 
-export default async function (instance?: string, clientId?: string): Promise<cliReturnType> {
+export default async function 
+  (instance?: string, clientId?: string, refreshToken?: string): Promise<cliReturnType> {
 
   console.log(chalk.green("ServiceNow OAuth 2.0 Authentication").bold());
   console.log(chalk.blueBright(`To get a Client ID & Client Secret you have to create
@@ -41,8 +42,10 @@ export default async function (instance?: string, clientId?: string): Promise<cl
   if (!clientId) clientId = answers.clientId;
 
   let oauthInstance = oauth(instance);
-  let refreshToken = await oauthInstance.getRefreshToken
-    (answers.user, answers.userPassword, clientId, answers.clientSecret);
+  if (!refreshToken) {
+    refreshToken = await oauthInstance.getRefreshToken
+      (answers.user, answers.userPassword, clientId, answers.clientSecret);
+  }
   let accessToken = await oauthInstance.getAccessToken
     (clientId, answers.clientSecret, refreshToken);
 
