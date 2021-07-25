@@ -38,8 +38,8 @@ export default async function
   });
 
   let answers = await inquirer.prompt(questionList);
-  if (!instance) instance = answers.instanceName;
-  if (!clientId) clientId = answers.clientId;
+  if (!instance) instance = answers.instanceName as string;
+  if (!clientId) clientId = answers.clientId as string;
 
   let oauthInstance = oauth(instance);
   if (!refreshToken) {
