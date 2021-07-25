@@ -45,9 +45,9 @@ function default_1(instance, clientId, refreshToken) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log(chalk.green("ServiceNow OAuth 2.0 Authentication").bold());
-                    console.log(chalk.blueBright("To get a Client ID & Client Secret you have to create\n  an OAuth Application Registry record in ServiceNow. You just have to provide a name, \n  you can leave everything else blank."));
-                    console.log(chalk.yellow("======================================="));
+                    console.log(chalk.green.underline.bold("ServiceNow OAuth 2.0 Authentication"));
+                    console.log(chalk.blueBright("To get a Client ID & Client Secret you have to create an OAuth Application Registry record in ServiceNow.\n  You just have to provide a name, everything else can be blank."));
+                    console.log(chalk.yellow("====================================================="));
                     questionList = [];
                     if (!instance) {
                         questionList.push({

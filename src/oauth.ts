@@ -25,11 +25,6 @@ export default function oauth(instance: string): oauthReturn {
     clientId: string,
     clientSecret: string): Promise<string> {
 
-      console.log("username: " + username);
-      console.log("password: " + password);
-      console.log("clientId: " + clientId);
-      console.log("clientSecret: " + clientSecret);
-
     var response = await axios.post(oauthTokenUrl, qs.stringify({
       "grant_type": "password",
       "client_id": clientId,

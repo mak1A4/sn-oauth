@@ -49,20 +49,15 @@ function oauth(instance) {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log("username: " + username);
-                        console.log("password: " + password);
-                        console.log("clientId: " + clientId);
-                        console.log("clientSecret: " + clientSecret);
-                        return [4 /*yield*/, axios_1.default.post(oauthTokenUrl, qs.stringify({
-                                "grant_type": "password",
-                                "client_id": clientId,
-                                "client_secret": clientSecret,
-                                "username": username,
-                                "password": password
-                            }), {
-                                headers: headers
-                            })];
+                    case 0: return [4 /*yield*/, axios_1.default.post(oauthTokenUrl, qs.stringify({
+                            "grant_type": "password",
+                            "client_id": clientId,
+                            "client_secret": clientSecret,
+                            "username": username,
+                            "password": password
+                        }), {
+                            headers: headers
+                        })];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response.data.refresh_token];

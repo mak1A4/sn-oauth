@@ -7,15 +7,14 @@ interface cliReturnType {
   accessToken: string, refreshToken: string
 }
 
-export default async function 
+export default async function
   (instance?: string, clientId?: string, refreshToken?: string): Promise<cliReturnType> {
 
-  console.log(chalk.green("ServiceNow OAuth 2.0 Authentication").bold());
-  console.log(chalk.blueBright(`To get a Client ID & Client Secret you have to create
-  an OAuth Application Registry record in ServiceNow. You just have to provide a name, 
-  you can leave everything else blank.`));
-  console.log(chalk.yellow("======================================="));
-  
+  console.log(chalk.green.underline.bold("ServiceNow OAuth 2.0 Authentication"));
+  console.log(chalk.blueBright(`To get a Client ID & Client Secret you have to create an OAuth Application Registry record in ServiceNow.
+  You just have to provide a name, everything else can be blank.`));
+  console.log(chalk.yellow("====================================================="));
+
   let questionList: Array<QuestionCollection> = [];
   if (!instance) {
     questionList.push({
