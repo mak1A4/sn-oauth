@@ -4,7 +4,7 @@ import { QuestionCollection } from "inquirer";
 import oauth from "./oauth";
 
 interface cliReturnType {
-  accessToken: string, refreshToken: string, clientSecret: string
+  accessToken: string, refreshToken: string, clientSecret: string, answers?: object
 }
 
 export default async function (
@@ -71,6 +71,7 @@ export default async function (
   return {
     "accessToken": accessToken,
     "refreshToken": refreshToken,
-    "clientSecret": answers.clientSecret
+    "clientSecret": answers.clientSecret,
+    "answers": answers
   };
 };

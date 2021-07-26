@@ -102,7 +102,8 @@ function default_1(instance, clientId, clientSecret, refreshToken) {
                     return [2 /*return*/, {
                             "accessToken": accessToken,
                             "refreshToken": refreshToken,
-                            "clientSecret": answers.clientSecret
+                            "clientSecret": answers.clientSecret,
+                            "answers": answers
                         }];
             }
         });
