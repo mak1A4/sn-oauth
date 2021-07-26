@@ -57,7 +57,9 @@ function default_1(instance, clientId, clientSecret, refreshToken) {
                     return [2 /*return*/, {
                             "accessToken": accessToken_1,
                             "refreshToken": refreshToken,
-                            "clientSecret": clientSecret
+                            "clientId": clientId,
+                            "clientSecret": clientSecret,
+                            "instanceName": instance
                         }];
                 case 2:
                     console.log(chalk.green.underline.bold("ServiceNow OAuth 2.0 Authentication"));
@@ -102,8 +104,9 @@ function default_1(instance, clientId, clientSecret, refreshToken) {
                     return [2 /*return*/, {
                             "accessToken": accessToken,
                             "refreshToken": refreshToken,
+                            "clientId": clientId,
                             "clientSecret": answers.clientSecret,
-                            "answers": answers
+                            "instanceName": instance
                         }];
             }
         });

@@ -4,7 +4,11 @@ import { QuestionCollection } from "inquirer";
 import oauth from "./oauth";
 
 interface cliReturnType {
-  accessToken: string, refreshToken: string, clientSecret: string, answers?: object
+  accessToken: string, 
+  refreshToken: string, 
+  clientId: string,
+  clientSecret: string,
+  instanceName: string
 }
 
 export default async function (
@@ -26,7 +30,9 @@ export default async function (
     return {
       "accessToken": accessToken,
       "refreshToken": refreshToken,
-      "clientSecret": clientSecret
+      "clientId": clientId,
+      "clientSecret": clientSecret,
+      "instanceName": instance
     };
   }
 
@@ -71,7 +77,8 @@ export default async function (
   return {
     "accessToken": accessToken,
     "refreshToken": refreshToken,
+    "clientId": clientId,
     "clientSecret": answers.clientSecret,
-    "answers": answers
+    "instanceName": instance
   };
 };
