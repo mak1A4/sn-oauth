@@ -52,14 +52,16 @@ export default async function (
       name: "clientId", type: "input", message: "Client ID:"
     });
   }
+  if (!clientSecret) {
+    questionList.push({
+      name: "clientSecret", type: "password", message: "Client Secret:", mask: "*"
+    });
+  }
   questionList.push({
     name: "user", type: "input", message: "User:"
   });
   questionList.push({
     name: "userPassword", type: "password", message: "Password:", mask: "*"
-  });
-  questionList.push({
-    name: "clientSecret", type: "password", message: "Client Secret:", mask: "*"
   });
 
   let answers = await inquirer.prompt(questionList);

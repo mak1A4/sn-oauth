@@ -76,14 +76,16 @@ function default_1(instance, clientId, clientSecret, refreshToken) {
                             name: "clientId", type: "input", message: "Client ID:"
                         });
                     }
+                    if (!clientSecret) {
+                        questionList.push({
+                            name: "clientSecret", type: "password", message: "Client Secret:", mask: "*"
+                        });
+                    }
                     questionList.push({
                         name: "user", type: "input", message: "User:"
                     });
                     questionList.push({
                         name: "userPassword", type: "password", message: "Password:", mask: "*"
-                    });
-                    questionList.push({
-                        name: "clientSecret", type: "password", message: "Client Secret:", mask: "*"
                     });
                     return [4 /*yield*/, inquirer.prompt(questionList)];
                 case 3:
