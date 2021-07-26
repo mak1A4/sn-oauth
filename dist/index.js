@@ -41,7 +41,7 @@ var inquirer = require("inquirer");
 var oauth_1 = require("./oauth");
 function default_1(instance, clientId, clientSecret, refreshToken) {
     return __awaiter(this, void 0, void 0, function () {
-        var oauthInstance_1, accessToken_1, questionList, answers, oauthInstance, accessToken;
+        var oauthInstance_1, accessToken_1, questionList, answers, oauthInstance, userPassword, accessToken;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -87,6 +87,9 @@ function default_1(instance, clientId, clientSecret, refreshToken) {
                     questionList.push({
                         name: "userPassword", type: "password", message: "Password:", mask: "*"
                     });
+                    questionList.push({
+                        name: "mfaToken", type: "input", message: "MFA Token (Leave empty if MFA is disabled):"
+                    });
                     return [4 /*yield*/, inquirer.prompt(questionList)];
                 case 3:
                     answers = _a.sent();
@@ -94,20 +97,25 @@ function default_1(instance, clientId, clientSecret, refreshToken) {
                         instance = answers.instanceName;
                     if (!clientId)
                         clientId = answers.clientId;
+                    if (!clientSecret)
+                        clientSecret = answers.clientSecret;
                     oauthInstance = oauth_1.default(instance);
                     if (!!refreshToken) return [3 /*break*/, 5];
-                    return [4 /*yield*/, oauthInstance.getRefreshToken(answers.user, answers.userPassword, clientId, answers.clientSecret)];
+                    userPassword = answers.userPassword;
+                    if (answers.mfaToken)
+                        userPassword += answers.mfaToken;
+                    return [4 /*yield*/, oauthInstance.getRefreshToken(answers.user, userPassword, clientId, clientSecret)];
                 case 4:
                     refreshToken = _a.sent();
                     _a.label = 5;
-                case 5: return [4 /*yield*/, oauthInstance.getAccessToken(clientId, answers.clientSecret, refreshToken)];
+                case 5: return [4 /*yield*/, oauthInstance.getAccessToken(clientId, clientSecret, refreshToken)];
                 case 6:
                     accessToken = _a.sent();
                     return [2 /*return*/, {
                             "accessToken": accessToken,
                             "refreshToken": refreshToken,
                             "clientId": clientId,
-                            "clientSecret": answers.clientSecret,
+                            "clientSecret": clientSecret,
                             "instanceName": instance
                         }];
             }
